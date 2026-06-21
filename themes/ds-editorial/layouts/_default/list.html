@@ -1,0 +1,76 @@
+{{ define "main" }}
+<section class="list-page">
+  <header class="list-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="list-intro">{{ . }}</div>{{ end }}
+  </header>
+
+  {{ if eq .Section "releases" }}
+  <div class="grid grid-releases">
+    {{ range .Pages }}
+    <a class="card card-release" href="{{ .RelPermalink }}">
+      {{ if .Params.coverart }}
+      <div class="cover cover-img" style="--seed: {{ len .Title }}">
+        <img src="{{ .Params.coverart }}" alt="{{ .Title }}">
+        <span>{{ with .Params.catalog }}{{ . }}{{ end }}</span>
+      </div>
+      {{ else }}
+      <div class="cover" style="--seed: {{ len .Title }}"><span>{{ with .Params.catalog }}{{ . }}{{ end }}</span></div>
+      {{ end }}
+      <div class="card-meta">
+        <span class="card-title">{{ .Title }}</span>
+        <span class="card-sub">{{ .Params.format }}</span>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  {{ else if eq .Section "artists" }}
+  {{- $active := sort (where .Pages "Params.status" "active") "Params.weight" }}
+  {{- $legacy := sort (where .Pages "Params.status" "legacy") "Params.weight" }}
+  <h2 class="roster-section-head">Current</h2>
+  <ul class="roster roster-full">
+    {{ range $active }}
+    <li><a href="{{ .RelPermalink }}"><span class="roster-name">{{ .Title }}</span>{{ with .Params.location }}<span class="roster-loc">{{ . }}</span>{{ end }}</a></li>
+    {{ end }}
+  </ul>
+  {{ if $legacy }}
+  <h2 class="roster-section-head">Legacy</h2>
+  <ul class="roster roster-full roster-legacy">
+    {{ range $legacy }}
+    <li><a href="{{ .RelPermalink }}"><span class="roster-name">{{ .Title }}</span>{{ with .Params.location }}<span class="roster-loc">{{ . }}</span>{{ end }}</a></li>
+    {{ end }}
+  </ul>
+  {{ end }}
+
+  {{ else if eq .Section "videos" }}
+  <div class="grid grid-videos">
+    {{ range .Pages }}
+    <a class="card card-video" href="{{ .RelPermalink }}">
+      <div class="video-thumb">
+        {{ with .Params.youtube }}
+        <img src="https://img.youtube.com/vi/{{ . }}/hqdefault.jpg" alt="{{ $.Title }}">
+        {{ end }}
+        <span class="play-icon">▶</span>
+      </div>
+      <div class="card-meta">
+        <span class="card-title">{{ .Title }}</span>
+        {{ with .Params.artist }}<span class="card-sub">{{ . }}</span>{{ end }}
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  {{ else }}
+  <ul class="news-list">
+    {{ range .Pages }}
+    <li>
+      <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      <p>{{ .Summary }}</p>
+    </li>
+    {{ end }}
+  </ul>
+  {{ end }}
+</section>
+{{ end }}

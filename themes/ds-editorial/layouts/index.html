@@ -1,0 +1,61 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="hero-banner">
+    <img src="/images/discrete_spectrum_banner.png" alt="Discrete Spectrum">
+  </div>
+  <p class="hero-tagline">Artist-run label. Ambient, punk, experimental, jazz sounds. Dead media &amp; digital. Spirit over genre.</p>
+</section>
+
+<section class="block">
+  <div class="block-head"><h2>Releases</h2><a href="{{ "/releases/" | relURL }}">All releases →</a></div>
+  <div class="grid grid-releases">
+    {{ range first 6 (where site.RegularPages "Section" "releases") }}
+    <a class="card card-release" href="{{ .RelPermalink }}">
+      {{ if .Params.coverart }}
+      <div class="cover cover-img" style="--seed: {{ len .Title }}">
+        <img src="{{ .Params.coverart }}" alt="{{ .Title }}">
+        <span>{{ with .Params.catalog }}{{ . }}{{ end }}</span>
+      </div>
+      {{ else }}
+      <div class="cover" style="--seed: {{ len .Title }}"><span>{{ with .Params.catalog }}{{ . }}{{ end }}</span></div>
+      {{ end }}
+      <div class="card-meta">
+        <span class="card-title">{{ .Title }}</span>
+        <span class="card-sub">{{ .Params.format }}</span>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</section>
+
+{{ if where site.RegularPages "Section" "videos" }}
+<section class="block">
+  <div class="block-head"><h2>Videos</h2><a href="{{ "/videos/" | relURL }}">All videos →</a></div>
+  <div class="grid grid-videos">
+    {{ range first 6 (where site.RegularPages "Section" "videos") }}
+    <a class="card card-video" href="{{ .RelPermalink }}">
+      <div class="video-thumb">
+        {{ with .Params.youtube }}<img src="https://img.youtube.com/vi/{{ . }}/hqdefault.jpg" alt="{{ $.Title }}">{{ end }}
+        <span class="play-icon">▶</span>
+      </div>
+      <div class="card-meta">
+        <span class="card-title">{{ .Title }}</span>
+        {{ with .Params.artist }}<span class="card-sub">{{ . }}</span>{{ end }}
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+
+<section class="block">
+  <div class="block-head"><h2>Artists</h2><a href="{{ "/artists/" | relURL }}">Full roster →</a></div>
+  <ul class="roster">
+    {{ range sort (where site.RegularPages "Section" "artists") "Params.weight" }}
+    {{ if ne .Params.status "legacy" }}
+    <li><a href="{{ .RelPermalink }}"><span class="roster-name">{{ .Title }}</span>{{ with .Params.location }}<span class="roster-loc">{{ . }}</span>{{ end }}</a></li>
+    {{ end }}
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

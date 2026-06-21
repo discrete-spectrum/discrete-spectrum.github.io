@@ -1,0 +1,142 @@
+{{ define "main" }}
+<article class="single">
+  <nav class="crumb"><a href="{{ "/" | relURL }}">Discrete Spectrum</a> <span>/</span> <a href="{{ printf "/%s/" .Section | relURL }}">{{ .Section | title }}</a></nav>
+  <h1 class="single-title">{{ .Title }}</h1>
+
+  {{ if eq .Section "artists" }}
+  {{ with .Params.photos }}
+  <div class="photo-grid photo-grid-{{ len . }}">
+    {{ range . }}<figure><img src="{{ . }}" alt="{{ $.Title }}"></figure>{{ end }}
+  </div>
+  {{ else }}{{ with .Params.photo }}
+  <div class="photo-grid photo-grid-1">
+    <figure><img src="{{ . }}" alt="{{ $.Title }}"></figure>
+  </div>
+  {{ end }}{{ end }}
+  {{ end }}
+
+  {{ if eq .Section "releases" }}
+  {{ with .Params.photos }}
+  <div class="photo-grid photo-grid-{{ len . }}">
+    {{ range . }}<figure><img src="{{ . }}" alt="{{ $.Title }}"></figure>{{ end }}
+  </div>
+  {{ else }}{{ with .Params.coverart }}
+  <div class="photo-grid photo-grid-1">
+    <figure><img src="{{ . }}" alt="{{ $.Title }}"></figure>
+  </div>
+  {{ end }}{{ end }}
+  <dl class="meta">
+    {{ with .Params.artist }}
+    {{- $artistPage := index (where (where site.RegularPages "Section" "artists") "Title" .) 0 }}
+    <div><dt>Artist</dt><dd>{{ if $artistPage }}<a href="{{ $artistPage.RelPermalink }}">{{ . }}</a>{{ else }}{{ . }}{{ end }}</dd></div>
+    {{ end }}
+    {{ with .Params.catalog }}<div><dt>Catalog</dt><dd>{{ . }}</dd></div>{{ end }}
+    {{ with .Params.format }}<div><dt>Format</dt><dd>{{ . }}</dd></div>{{ end }}
+    {{ with .Params.released }}<div><dt>Release Date</dt><dd>{{ . }}</dd></div>{{ end }}
+  </dl>
+  {{ end }}
+
+  <div class="content">{{ .Content }}</div>
+
+  {{ if eq .Section "artists" }}
+  <div class="links">
+    {{ with .Params.website }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Website</a>{{ end }}
+    {{ with .Params.bandcamp }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Bandcamp</a>{{ end }}
+    {{ with .Params.spotify }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Spotify</a>{{ end }}
+    {{ with .Params.instagram }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Instagram</a>{{ end }}
+  </div>
+  {{- $releases := where site.RegularPages "Section" "releases" }}
+  {{- $releases = where $releases "Params.artist" .Title }}
+  {{ if $releases }}
+  <div class="artist-releases">
+    <h2 class="artist-releases-head">Releases</h2>
+    <div class="grid grid-releases">
+      {{ range $releases }}
+      <a class="card card-release" href="{{ .RelPermalink }}">
+        {{ if .Params.coverart }}
+        <div class="cover cover-img" style="--seed: {{ len .Title }}">
+          <img src="{{ .Params.coverart }}" alt="{{ .Title }}">
+          <span>{{ with .Params.catalog }}{{ . }}{{ end }}</span>
+        </div>
+        {{ else }}
+        <div class="cover" style="--seed: {{ len .Title }}"><span>{{ with .Params.catalog }}{{ . }}{{ end }}</span></div>
+        {{ end }}
+        <div class="card-meta">
+          <span class="card-title">{{ .Title }}</span>
+          <span class="card-sub">{{ .Params.format }}</span>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+  {{- $artistVideos := where (where site.RegularPages "Section" "videos") "Params.artist" .Title }}
+  {{ if $artistVideos }}
+  <div class="artist-releases">
+    <h2 class="artist-releases-head">Videos</h2>
+    <div class="grid grid-videos">
+      {{ range $artistVideos }}
+      <a class="card card-video" href="{{ .RelPermalink }}">
+        <div class="video-thumb">
+          {{ with .Params.youtube }}<img src="https://img.youtube.com/vi/{{ . }}/hqdefault.jpg" alt="{{ $.Title }}">{{ end }}
+          <span class="play-icon">▶</span>
+        </div>
+        <div class="card-meta">
+          <span class="card-title">{{ .Title }}</span>
+          {{ with .Params.release }}<span class="card-sub">{{ . }}</span>{{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+  {{ end }}
+
+  {{ if eq .Section "releases" }}
+  {{- $releaseVideos := where (where site.RegularPages "Section" "videos") "Params.release" .Title }}
+  {{ if $releaseVideos }}
+  <div class="artist-releases">
+    <h2 class="artist-releases-head">Videos</h2>
+    <div class="grid grid-videos">
+      {{ range $releaseVideos }}
+      <a class="card card-video" href="{{ .RelPermalink }}">
+        <div class="video-thumb">
+          {{ with .Params.youtube }}<img src="https://img.youtube.com/vi/{{ . }}/hqdefault.jpg" alt="{{ $.Title }}">{{ end }}
+          <span class="play-icon">▶</span>
+        </div>
+        <div class="card-meta">
+          <span class="card-title">{{ .Title }}</span>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+  <div class="release-embeds">
+    {{ with .Params.bandcamp_embed }}<div class="bandcamp-embed">{{ . | safeHTML }}</div>{{ end }}
+  </div>
+  <div class="links">
+    {{ with .Params.bandcamp }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">Buy / Listen on Bandcamp</a>{{ end }}
+    {{ with .Params.spotify }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Listen on Spotify</a>{{ end }}
+  </div>
+  {{ end }}
+
+  {{ if eq .Section "videos" }}
+  {{ with .Params.youtube }}
+  <div class="video-embed">
+    <iframe src="https://www.youtube.com/embed/{{ . }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  {{ end }}
+  <dl class="meta">
+    {{ with .Params.artist }}
+    {{- $artistPage := index (where (where site.RegularPages "Section" "artists") "Title" .) 0 }}
+    <div><dt>Artist</dt><dd>{{ if $artistPage }}<a href="{{ $artistPage.RelPermalink }}">{{ . }}</a>{{ else }}{{ . }}{{ end }}</dd></div>
+    {{ end }}
+    {{ with .Params.release }}
+    {{- $releasePage := index (where (where site.RegularPages "Section" "releases") "Title" .) 0 }}
+    <div><dt>Release</dt><dd>{{ if $releasePage }}<a href="{{ $releasePage.RelPermalink }}">{{ . }}</a>{{ else }}{{ . }}{{ end }}</dd></div>
+    {{ end }}
+  </dl>
+  {{ end }}
+</article>
+{{ end }}

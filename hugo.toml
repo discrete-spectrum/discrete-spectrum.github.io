@@ -1,0 +1,44 @@
+baseURL = "https://discretespectrum.com/"
+locale = "en-us"
+title = "Discrete Spectrum"
+theme = "ds-editorial"
+
+# No tag/category taxonomies for a label catalog.
+disableKinds = ["taxonomy", "term"]
+
+enableRobotsTXT = true
+disableHugoGeneratorInject = true
+buildDrafts = false
+buildFuture = false
+
+[params]
+  description = "Artist-run label. Ambient, punk, experimental, jazz sounds. Dead media & digital. Spirit over genre."
+
+# Top navigation
+[menu]
+  [[menu.main]]
+    name = "Artists"
+    url = "/artists/"
+    weight = 10
+  [[menu.main]]
+    name = "Releases"
+    url = "/releases/"
+    weight = 20
+  [[menu.main]]
+    name = "Videos"
+    url = "/videos/"
+    weight = 25
+  [[menu.main]]
+    name = "News"
+    url = "/news/"
+    weight = 30
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 40
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+[pagination]
+  pagerSize = 12

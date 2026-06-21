@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {{/* ── Title ────────────────────────────────────────────────────── */}}
+  {{- $title := site.Title }}
+  {{- if not .IsHome }}
+    {{- if and (eq .Section "releases") .Params.artist }}
+      {{- $title = printf "%s by %s — %s" .Title .Params.artist site.Title }}
+    {{- else }}
+      {{- $title = printf "%s — %s" .Title site.Title }}
+    {{- end }}
+  {{- end }}
+  <title>{{ $title }}</title>
+
+  {{/* ── Description ──────────────────────────────────────────────── */}}
+  {{- $desc := site.Params.description }}
+  {{- with .Params.description }}{{ $desc = . }}
+  {{- else }}{{ with .Summary }}{{ $desc = . | plainify | strings.TrimRight " " }}{{ end }}
+  {{- end }}
+  <meta name="description" content="{{ $desc }}">
+
+  {{/* ── Canonical ────────────────────────────────────────────────── */}}
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  {{/* ── OG image ─────────────────────────────────────────────────── */}}
+  {{- $img := "" }}
+  {{- with .Params.coverart }}{{ $img = . | absURL }}{{ end }}
+  {{- with .Params.photo }}{{ $img = . | absURL }}{{ end }}
+  {{- with .Params.photos }}{{ $img = (index . 0) | absURL }}{{ end }}
+  {{- with .Params.youtube }}{{ $img = printf "https://img.youtube.com/vi/%s/maxresdefault.jpg" . }}{{ end }}
+
+  {{/* ── Open Graph ───────────────────────────────────────────────── */}}
+  <meta property="og:site_name" content="{{ site.Title }}">
+  <meta property="og:title" content="{{ $title }}">
+  <meta property="og:description" content="{{ $desc }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  {{- if eq .Section "releases" }}
+  <meta property="og:type" content="music.album">
+  {{- else if eq .Section "artists" }}
+  <meta property="og:type" content="music.musician">
+  {{- else if eq .Section "videos" }}
+  <meta property="og:type" content="video.other">
+  {{- else }}
+  <meta property="og:type" content="website">
+  {{- end }}
+  {{- with $img }}
+  <meta property="og:image" content="{{ . }}">
+  {{- end }}
+
+  {{/* ── Twitter Card ─────────────────────────────────────────────── */}}
+  <meta name="twitter:card" content="{{ if $img }}summary_large_image{{ else }}summary{{ end }}">
+  <meta name="twitter:title" content="{{ $title }}">
+  <meta name="twitter:description" content="{{ $desc }}">
+  {{- with $img }}
+  <meta name="twitter:image" content="{{ . }}">
+  {{- end }}
+
+  {{/* ── JSON-LD Structured Data ──────────────────────────────────── */}}
+  {{- if .IsHome }}
+  {{- $schema := dict "@context" "https://schema.org" "@type" "Organization" "name" site.Title "url" site.BaseURL "description" site.Params.description }}
+  {{- printf "<script type=\"application/ld+json\">\n%s\n</script>" ($schema | jsonify (dict "indent" "  ")) | safeHTML }}
+  {{- else if and (eq .Section "artists") .IsPage }}
+  {{- $schema := dict "@context" "https://schema.org" "@type" "MusicGroup" "name" .Title "url" .Permalink }}
+  {{- with .Summary | plainify }}{{ $schema = merge $schema (dict "description" .) }}{{ end }}
+  {{- with $img }}{{ $schema = merge $schema (dict "image" .) }}{{ end }}
+  {{- $sameAs := slice }}
+  {{- with .Params.website }}{{ $sameAs = $sameAs | append . }}{{ end }}
+  {{- with .Params.bandcamp }}{{ $sameAs = $sameAs | append . }}{{ end }}
+  {{- with .Params.spotify }}{{ $sameAs = $sameAs | append . }}{{ end }}
+  {{- with .Params.instagram }}{{ $sameAs = $sameAs | append . }}{{ end }}
+  {{- if $sameAs }}{{ $schema = merge $schema (dict "sameAs" $sameAs) }}{{ end }}
+  {{- printf "<script type=\"application/ld+json\">\n%s\n</script>" ($schema | jsonify (dict "indent" "  ")) | safeHTML }}
+  {{- else if and (eq .Section "releases") .IsPage }}
+  {{- $schema := dict "@context" "https://schema.org" "@type" "MusicAlbum" "name" .Title "url" .Permalink }}
+  {{- with .Params.artist }}{{ $schema = merge $schema (dict "byArtist" (dict "@type" "MusicGroup" "name" .)) }}{{ end }}
+  {{- with $img }}{{ $schema = merge $schema (dict "image" .) }}{{ end }}
+  {{- with .Params.released }}{{ $schema = merge $schema (dict "datePublished" .) }}{{ end }}
+  {{- with .Params.bandcamp }}{{ $schema = merge $schema (dict "offers" (dict "@type" "Offer" "url" .)) }}{{ end }}
+  {{- printf "<script type=\"application/ld+json\">\n%s\n</script>" ($schema | jsonify (dict "indent" "  ")) | safeHTML }}
+  {{- else if and (eq .Section "videos") .IsPage }}
+  {{- with .Params.youtube }}
+  {{- $schema := dict "@context" "https://schema.org" "@type" "VideoObject" "name" $.Title "url" $.Permalink "thumbnailUrl" (printf "https://img.youtube.com/vi/%s/maxresdefault.jpg" .) "embedUrl" (printf "https://www.youtube.com/embed/%s" .) }}
+  {{- with $.Params.artist }}{{ $schema = merge $schema (dict "author" (dict "@type" "MusicGroup" "name" .)) }}{{ end }}
+  {{- printf "<script type=\"application/ld+json\">\n%s\n</script>" ($schema | jsonify (dict "indent" "  ")) | safeHTML }}
+  {{- end }}
+  {{- end }}
+
+  {{/* ── Assets ───────────────────────────────────────────────────── */}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+</head>
+<body class="{{ .Section }}">
+  <header class="site-header">
+    <a class="brand" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+    <nav class="site-nav">
+      {{ range site.Menus.main }}<a href="{{ .URL | relURL }}">{{ .Name }}</a>{{ end }}
+    </nav>
+  </header>
+  <main>{{ block "main" . }}{{ end }}</main>
+  <footer class="site-footer">
+    <span>© {{ now.Year }} {{ site.Title }}</span>
+    <span>spirit over genre</span>
+  </footer>
+</body>
+</html>

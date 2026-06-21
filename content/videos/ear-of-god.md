@@ -1,0 +1,8 @@
+---
+title: "Ear of God"
+date: 2021-11-12T00:00:00-05:00
+draft: false
+artist: "Phantom Lease"
+release: "Home"
+youtube: "CI1yhxdeKzU"
+---
