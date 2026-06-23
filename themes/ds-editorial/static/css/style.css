@@ -147,4 +147,8 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
   .grid-releases { grid-template-columns: repeat(2, 1fr); }
   .grid-videos { grid-template-columns: repeat(2, 1fr); }
   .site-header { flex-direction: column; gap: 14px; align-items: flex-start; }
+  .site-nav { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .site-nav a { margin-left: 0; }
+  .hero-tagline { white-space: normal; }
+  .content { text-align: justify; }
 }
