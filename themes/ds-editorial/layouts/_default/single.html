@@ -1,6 +1,6 @@
 {{ define "main" }}
 <article class="single">
-  <nav class="crumb"><a href="{{ "/" | relURL }}">Discrete Spectrum</a> <span>/</span> <a href="{{ printf "/%s/" .Section | relURL }}">{{ .Section | title }}</a></nav>
+  <nav class="crumb"><a href="{{ "/" | relURL }}">Discrete Spectrum</a> {{ with .Section }}<span>/</span> <a href="{{ printf "/%s/" . | relURL }}">{{ . | title }}</a>{{ end }}</nav>
   <h1 class="single-title">{{ .Title }}</h1>
 
   {{ if eq .Section "artists" }}
