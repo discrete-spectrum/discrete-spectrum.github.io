@@ -1,12 +1,12 @@
 ---
 title: "TIC TAC TOC"
-date: 2013-02-14T12:31:42-04:00
+date: 2012-02-14T12:31:42-04:00
 draft: false
 # --- Release fields ---
 artist: "Robert Ethington"
 catalog: "DS-017"
 format: "CD / Digital"
-released: "Feburary 14, 2013"
+released: "February 14, 2012"
 coverart: "/images/artists/robert_ethington/tic_tac_toc.jpg"
 bandcamp: "https://discretespectrum.bandcamp.com/album/tic-tac-toc"       # link to buy / listen
 spotify: "https://open.spotify.com/album/0C5oHgYCeZ3BGu5U5vj1rU?si=IAoIt2iKRieOk8k2nlAI4w"

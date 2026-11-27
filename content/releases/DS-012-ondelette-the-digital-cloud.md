@@ -1,6 +1,7 @@
 ---
 title: "Ondelette"
 date: 2012-05-15T23:47:59-04:00
+aliases: ["/releases/ds-012-ondelette-the-digtial-cloud/"]
 draft: false
 # --- Release fields ---
 artist: "Ondelette"

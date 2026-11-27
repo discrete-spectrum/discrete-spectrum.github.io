@@ -1,6 +1,7 @@
 ---
 title: "Three New Sciences"
 date: 2013-08-13T00:05:26-04:00
+aliases: ["/releases/ds-018-comfort-clouds-three-new-science/"]
 draft: false
 # --- Release fields ---
 artist: "Comfort Clouds"

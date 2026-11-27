@@ -1,12 +1,13 @@
 ---
 title: "Live at Rubicon Cinema"
 date: 2025-05-30T14:05:06-04:00
+aliases: ["/releases/ds-032-horses-4k-live-at-rubicon-cinema/"]
 draft: false
 # --- Release fields ---
 artist: "Horses 4k"
-catalog: "DS-032"
+catalog: ""
 format: "Digital"
-released: "March 30, 2025"
+released: "May 30, 2025"
 coverart: "/images/artists/horses_4k/live_at_rubicon_cinema.jpg"
 bandcamp: "https://horses4k.bandcamp.com/album/live-at-rubicon-cinema"
 spotify: "https://open.spotify.com/album/6gVhr8aZvaHvvF86WHad2L?si=guenQjuLQfyP8kXeneVRIA"

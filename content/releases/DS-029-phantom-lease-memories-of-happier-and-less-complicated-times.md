@@ -1,6 +1,7 @@
 ---
 title: "Memories of Happier and Less Complicated Times"
 date: 2022-06-30T13:23:31-04:00
+aliases: ["/releases/ds-029-phantom-lease_memories-of-happier-and-less-complicated-times/"]
 draft: false
 # --- Release fields ---
 artist: "Phantom Lease"

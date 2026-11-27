@@ -6,7 +6,7 @@ draft: false
 artist: "Phantom Lease"
 catalog: "DS-027"
 format: "Digital"
-released: "11/19/2021"
+released: "November 19, 2021"
 coverart: "/images/artists/phantom_lease/home.jpg"
 bandcamp: "https://phantomlease.bandcamp.com/album/home"
 spotify: "https://open.spotify.com/album/7qiDTyl623t40poWUQUgEb?si=plXYhx3bSDKueUO73wzR6w"

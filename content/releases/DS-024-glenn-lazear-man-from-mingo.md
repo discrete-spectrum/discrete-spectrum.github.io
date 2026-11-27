@@ -1,12 +1,12 @@
 ---
 title: "Man From Mingo"
-date: 2018-10-05T13:34:49-04:00
+date: 2018-10-08T13:34:49-04:00
 draft: false
 # --- Release fields ---
 artist: "Glenn Lazear"
-catalog: "DS-022"
+catalog: "DS-024"
 format: "CD / Digital"
-released: "October 5, 2018"
+released: "October 8, 2018"
 coverart: "/images/artists/glenn_lazear/man_from_mingo.jpg"
 bandcamp: "https://glennlazear.bandcamp.com/album/man-from-mingo"
 spotify: "https://open.spotify.com/album/02oFsbiVZPx6OxWYwPX7oX?si=sdL64yYnTjiCBMjp2oIRfQ"

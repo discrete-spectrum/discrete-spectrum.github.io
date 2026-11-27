@@ -1,12 +1,12 @@
 ---
 title: "I (10 year anniversary)"
-date: 2022-02-18T13:31:57-04:00
+date: 2022-03-11T13:31:57-04:00
 draft: false
 # --- Release fields ---
 artist: "WATT"
 catalog: "DS-028"
 format: "Digital"
-released: "Feburary 18, 2022"
+released: "March 11, 2022"
 coverart: "/images/artists/watt/1_10th.jpg"
 bandcamp: "https://discretespectrum.bandcamp.com/album/i-2022"
 bandcamp_embed: |

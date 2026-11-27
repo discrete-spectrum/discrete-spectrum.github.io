@@ -1,6 +1,7 @@
 ---
-title: "Patient Afternoons"
+title: "Patient Afternoon"
 date: 2012-11-20T13:40:50-04:00
+aliases: ["/releases/ds-016-ondelette-patient-afternoons/"]
 draft: false
 # --- Release fields ---
 artist: "Ondelette"
